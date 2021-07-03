@@ -124,4 +124,11 @@ class User
             $this->followers->add($follower);
         }
     }
+
+    public function addAuthor(User $author): void
+    {
+        if (!$this->authors->contains($author)) {
+            $this->authors->add($author);
+        }
+    }
 }
