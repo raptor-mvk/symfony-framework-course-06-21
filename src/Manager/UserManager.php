@@ -45,4 +45,14 @@ class UserManager
         $follower->addAuthor($author);
         $this->entityManager->flush();
     }
+
+    /**
+     * @return User[]
+     */
+    public function findUsersByLogin(string $name): array
+    {
+        $repository = $this->entityManager->getRepository(User::class);
+
+        return $repository->findBy(['login' => $name]);
+    }
 }
