@@ -112,6 +112,7 @@ class User implements HasMetaTimestampsInterface
 
     /**
      * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function setUpdatedAt(): void {
         $this->updatedAt = new DateTime();

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +17,9 @@ class WorldController extends AbstractController
 
     public function hello(): Response
     {
-        $user = $this->userManager->create('J.R.R. Tolkien');
+        $user = $this->userManager->updateUserLogin(3, 'My new user');
+        [$data, $code] = $user === null ? [null, Response::HTTP_NOT_FOUND] : [$user->toArray(), Response::HTTP_OK];
 
-        return $this->json($user->toArray());
+        return $this->json($data, $code);
     }
 }
