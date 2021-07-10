@@ -5,7 +5,6 @@
 ## Устанавливаем требуемые пакеты, добавляем контейнер с СУБД, добавляем миграцию и выполняем её
 
 1. Заходим в контейнер `php` командой `docker exect -it php sh`. Дальнейшие команды выполняются из контейнера
-   указано иное
 1. Устанавливаем Doctrine ORM командой `composer require doctrine/orm`
 1. Устанавливаем пакет для работы с Doctrine командой `composer require doctrine/doctrine-bundle`
 1. Устанавливаем пакет для работы с миграциями командой `composer require doctrine/doctrine-migrations-bundle`
