@@ -19,7 +19,7 @@ class WorldController extends AbstractController
     {
         $user = $this->userManager->findUser(3);
         $userId = $user->getId();
-        $this->userManager->updateUserLoginWithQueryBuilder($userId, 'User is updated');
+        $this->userManager->updateUserLoginWithDBALQueryBuilder($userId, 'User is updated by DBAL');
         $this->userManager->clearEntityManager();
         $user = $this->userManager->findUser($userId);
 
