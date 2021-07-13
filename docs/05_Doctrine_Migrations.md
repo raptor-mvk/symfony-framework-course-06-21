@@ -363,20 +363,17 @@
 1. Заходим по адресу `http://localhost:7777/world/hello`, видим запись со старым логином и старым временем обновления
 1. Проверяем, что в БД запись обновилась
 
-
+## Исправляем QueryBuilder для update-запроса
 
 1. В классе `App\Controller\WorldController` исправляем метод `hello`
     ```php
     public function hello(): Response
     {
-        $userId = 5;
-        $user = $this->userService->findUser($userId);
-        if ($user === null) {
-            return $this->json([], Response::HTTP_NOT_FOUND);
-        }
-        $this->userService->updateUserLoginWithQueryBuilder($user->getId(), 'User is updated twice');
-        $this->userService->clearEntityManager();
-        $user = $this->userService->findUser($userId);
+        $user = $this->userManager->findUser(3);
+        $userId = $user->getId();
+        $this->userManager->updateUserLoginWithQueryBuilder($userId, 'User is updated');
+        $this->userManager->clearEntityManager();
+        $user = $this->userManager->findUser($userId);
     
         return $this->json($user->toArray());
     }
