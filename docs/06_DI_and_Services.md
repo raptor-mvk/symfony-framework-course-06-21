@@ -134,7 +134,6 @@
     
         private FormatService $formatService;
     
-    
         public function __construct(FormatService $formatService, GreeterService $greeterService)
         {
             $this->greeterService = $greeterService;
@@ -252,7 +251,7 @@
             return new Response("<html><body>$result</body></html>");
         }
     }
-        ```
+    ```
 1. В файл `config/services.yaml`
    1. Убираем сервис `App\Service\GreeterService`
    1. Добавляем новые сервисы
