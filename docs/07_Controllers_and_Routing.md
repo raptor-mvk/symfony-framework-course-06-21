@@ -251,7 +251,7 @@
     ```
 1. Ещё раз отправляем запрос Get user list из Postman-коллекции, видим список пользователей с данными
 
-
+## Используем аннотации из SensioFrameworkExtraBundle
 
 1. Устанавливаем пакет `sensio/framework-extra-bundle` командой `composer require sensio/framework-extra-bundle`
 1. Устанавливаем пакет `symfony/expression-language` командой `composer require symfony/expression-language`
@@ -416,9 +416,8 @@
         $userId = $request->query->get('userId');
         $login = $request->query->get('login');
         $result = $this->userManager->updateUser($userId, $login);
-        [$data, $code] = $result === null ? [null, 404] : [['user' => $result->toArray()], 200];
 
-        return new JsonResponse($data, $code);
+        return new JsonResponse(['success' => $result !== null], ($result !== null) ? 200 : 404);
     }
 
     /**

@@ -68,9 +68,8 @@ class UserController extends AbstractController
         $userId = $request->query->get('userId');
         $login = $request->query->get('login');
         $result = $this->userManager->updateUser($userId, $login);
-        [$data, $code] = $result === null ? [null, 404] : [['user' => $result->toArray()], 200];
 
-        return new JsonResponse($data, $code);
+        return new JsonResponse(['success' => $result !== null], ($result !== null) ? 200 : 404);
     }
 
     /**
