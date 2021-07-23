@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\Entity\User;
 use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,7 +46,7 @@ class UserController extends AbstractController
         $users = $this->userManager->getUsers($page ?? 0, $perPage ?? 20);
         $code = empty($users) ? 204 : 200;
 
-        return new JsonResponse(['users' => $users], $code);
+        return new JsonResponse(['users' => array_map(static fn(User $user) => $user->toArray(), $users)], $code);
     }
 
     /**
