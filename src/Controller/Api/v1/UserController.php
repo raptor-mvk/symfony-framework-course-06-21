@@ -55,7 +55,7 @@ class UserController extends AbstractController
     public function deleteUserAction(Request $request): Response
     {
         $userId = $request->query->get('userId');
-        $result = $this->userManager->deleteUser($userId);
+        $result = $this->userManager->deleteUserById($userId);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
     }
@@ -68,8 +68,9 @@ class UserController extends AbstractController
         $userId = $request->query->get('userId');
         $login = $request->query->get('login');
         $result = $this->userManager->updateUser($userId, $login);
+        [$data, $code] = $result === null ? [null, 404] : [['user' => $result->toArray()], 200];
 
-        return new JsonResponse(['success' => $result], $result ? 200 : 404);
+        return new JsonResponse($data, $code);
     }
 
     /**
@@ -77,7 +78,7 @@ class UserController extends AbstractController
      */
     public function deleteUserByIdAction(int $id): Response
     {
-        $result = $this->userManager->deleteUser($id);
+        $result = $this->userManager->deleteUserById($id);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
     }
