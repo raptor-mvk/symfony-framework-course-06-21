@@ -50,6 +50,39 @@ class UserManager
         return $user->getId();
     }
 
+    public function getUpdateForm(int $userId): ?FormInterface
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+        /** @var User $user */
+        $user = $userRepository->find($userId);
+        if ($user === null) {
+            return null;
+        }
+
+        return $this->formFactory->createBuilder(FormType::class, SaveUserDTO::fromEntity($user))
+            ->add('login', TextType::class)
+            ->add('password', PasswordType::class, ['required' => false])
+            ->add('age', IntegerType::class)
+            ->add('isActive', CheckboxType::class, ['required' => false])
+            ->add('submit', SubmitType::class)
+            ->setMethod('PATCH')
+            ->getForm();
+    }
+
+    public function updateUserFromDTO(int $userId, SaveUserDTO $userDTO): bool
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+        /** @var User $user */
+        $user = $userRepository->find($userId);
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->saveUserFromDTO($user, $userDTO);
+    }
+
     public function saveUser(string $login): ?int
     {
         $user = new User();
