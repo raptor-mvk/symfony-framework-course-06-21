@@ -5,14 +5,36 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class UserManager
 {
     private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private FormFactoryInterface $formFactory;
+
+    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
     {
         $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
+    }
+
+    public function getSaveForm(): FormInterface
+    {
+        return $this->formFactory->createBuilder(FormType::class)
+            ->add('login', TextType::class)
+            ->add('password', PasswordType::class, ['required' => false])
+            ->add('age', IntegerType::class)
+            ->add('isActual', CheckboxType::class, ['required' => false])
+            ->add('submit', SubmitType::class)
+            ->getForm();
     }
 
     public function saveUser(string $login): ?int

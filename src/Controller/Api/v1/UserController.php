@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /**
  * @Route("/api/v1/user")
@@ -23,10 +24,13 @@ class UserController extends AbstractController
 
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(UserManager $userManager, EventDispatcherInterface $eventDispatcher)
+    private Environment $twig;
+
+    public function __construct(UserManager $userManager, EventDispatcherInterface $eventDispatcher, Environment $twig)
     {
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->twig = $twig;
     }
 
     /**
@@ -99,5 +103,18 @@ class UserController extends AbstractController
         $this->eventDispatcher->dispatch(new CreateUserEvent($request->request->get('login')));
 
         return new JsonResponse(['success' => true], Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * @Route("/form", methods={"GET"})
+     */
+    public function getSaveFormAction(): Response
+    {
+        $form = $this->userManager->getSaveForm();
+        $content = $this->twig->render('form.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        return new Response($content);
     }
 }
