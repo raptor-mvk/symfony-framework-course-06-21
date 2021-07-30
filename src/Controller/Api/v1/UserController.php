@@ -3,6 +3,7 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\User;
+use App\Exception\DeprecatedApiException;
 use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,8 @@ class UserController extends AbstractController
      */
     public function saveUserAction(Request $request): Response
     {
+        throw new DeprecatedApiException('This API method is deprecated');
+
         $login = $request->request->get('login');
         $userId = $this->userManager->saveUser($login);
         [$data, $code] = $userId === null ?
