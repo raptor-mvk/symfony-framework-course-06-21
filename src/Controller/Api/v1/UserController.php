@@ -8,6 +8,7 @@ use App\Exception\DeprecatedApiException;
 use App\Manager\UserManager;
 use Ev;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use SaveUserDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,6 +112,27 @@ class UserController extends AbstractController
     public function getSaveFormAction(): Response
     {
         $form = $this->userManager->getSaveForm();
+        $content = $this->twig->render('form.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        return new Response($content);
+    }
+
+    /**
+     * @Route("/form", methods={"POST"})
+     */
+    public function saveUserFormAction(Request $request): Response
+    {
+        $form = $this->userManager->getSaveForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->userManager->saveUserFromDTO(new User(), new SaveUserDTO($form->getData()));
+            [$data, $code] = ($userId === null) ? [['success' => false], 400] : [['id' => $userId], 200];
+
+            return new JsonResponse($data, $code);
+        }
         $content = $this->twig->render('form.twig', [
             'form' => $form->createView(),
         ]);

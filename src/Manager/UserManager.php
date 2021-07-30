@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use SaveUserDTO;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -35,6 +36,18 @@ class UserManager
             ->add('isActual', CheckboxType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->getForm();
+    }
+
+    public function saveUserFromDTO(User $user, SaveUserDTO $saveUserDTO): ?int
+    {
+        $user->setLogin($saveUserDTO->login);
+        $user->setPassword($saveUserDTO->password);
+        $user->setAge($saveUserDTO->age);
+        $user->setIsActive($saveUserDTO->isActive);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user->getId();
     }
 
     public function saveUser(string $login): ?int
