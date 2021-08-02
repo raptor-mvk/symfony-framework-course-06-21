@@ -87,20 +87,24 @@ class UserManager
             return false;
         }
 
+        $user->resetFollowers();
+        var_dump($userDTO);
+
         foreach ($userDTO->followers as $followerData) {
             $followerUserDTO = new SaveUserDTO($followerData);
             /** @var User $followerUser */
             if (isset($followerData['id'])) {
                 $followerUser = $userRepository->find($followerData['id']);
-                if ($followerUser === null) {
+                if ($followerUser !== null) {
                     $this->saveUserFromDTO($followerUser, $followerUserDTO);
                 }
             } else {
                 $followerUser = new User();
                 $this->saveUserFromDTO($followerUser, $followerUserDTO);
-                $user->addFollower($followerUser);
             }
+            $user->addFollower($followerUser);
         }
+        var_dump(array_map(function(User $user) { return $user->getId(); }, $user->getFollowers()));
 
         return $this->saveUserFromDTO($user, $userDTO);
     }
