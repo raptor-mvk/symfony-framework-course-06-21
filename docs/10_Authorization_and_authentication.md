@@ -5,8 +5,8 @@
 ## Добавляем пререквизиты
 
 1. Заходим в контейнер `php` командой `docker exec -it php sh`. Дальнейшие команды выполняются из контейнера
-2. Устанавливаем пакеты `symfony/security-bundle`, `symfony/maker-bundle`
-3. В файле `config/packages/security.yaml`
+1. Устанавливаем пакеты `symfony/security-bundle`, `symfony/maker-bundle`
+1. В файле `config/packages/security.yaml`
     1. Добавляем секцию `encoders`
         ```yaml
         encoders:
@@ -22,7 +22,7 @@
                     property: login
         ```
     1. В секции `firewalls.main` заменяем `provider: users_in_memory` на `provider: app_user_provider`
-4. В классе `App\Entity\User`
+1. В классе `App\Entity\User`
     1. исправляем аннотации к полям `$login` и `$password`
         ```php
         /**
@@ -35,7 +35,7 @@
          */
         private string $password;
         ```
-    2. добавляем поле `$roles`, а также геттер и сеттер для него
+    1. добавляем поле `$roles`, а также геттер и сеттер для него
         ```php
         /**
          * @ORM\Column(type="string", length=1024, nullable=false)
@@ -66,7 +66,7 @@
             $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
         }
         ```
-    3. имплементируем `Symfony\Component\Security\Core\User\UserInterface`
+    1. имплементируем `Symfony\Component\Security\Core\User\UserInterface`
         ```php
         public function getSalt(): ?string
         {
@@ -87,8 +87,8 @@
             return $this->login;
         }
         ``` 
-    4. имплементируем `Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface` (нужный метод уже есть)
-    5. Исправляем метод `toArray`
+    1. имплементируем `Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface` (нужный метод уже есть)
+    1. Исправляем метод `toArray`
         ```php
         /**
          * @throws JsonException
@@ -130,13 +130,14 @@
             ];
         }
         ```
-5. Генерируем миграцию командой `php bin/console doctrine:migrations:diff`
-6. Выполняем миграцию командой `php bin/console doctrine:migrations:migrate`
-7. Исправляем класс `App\DTO\SaveUserDTO`
+1. Генерируем миграцию командой `php bin/console doctrine:migrations:diff`
+1. Выполняем миграцию командой `php bin/console doctrine:migrations:migrate`
+1. Исправляем класс `App\DTO\SaveUserDTO`
     ```php
     <?php
     
     use App\Entity\User;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Validator\Constraints as Assert;
     
     class SaveUserDTO
@@ -212,7 +213,7 @@
         }
     }
     ```
-8. В классе `App\Manager\UserManager`
+1. В классе `App\Manager\UserManager`
     1. добавляем инъекцию `UserPasswordEncoderInterface`
         ```php
         private UserPasswordHasherInterface $userPasswordHasher;
@@ -224,12 +225,12 @@
             $this->userPasswordHasher = $userPasswordHasher;
         }
         ```
-    2. Исправляем метод `saveUserFromDTO`
+    1. Исправляем метод `saveUserFromDTO`
         ```php
         public function saveUserFromDTO(User $user, SaveUserDTO $saveUserDTO): ?int
         {
             $user->setLogin($saveUserDTO->login);
-            $user->setPassword($saveUserDTO->password);
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, $saveUserDTO->password));
             $user->setAge($saveUserDTO->age);
             $user->setIsActive($saveUserDTO->isActive);
             $user->setRoles($saveUserDTO->roles);
@@ -239,7 +240,7 @@
             return $user->getId();
         }
         ```
-9. Добавляем класс `App\Controller\Api\v3\UserController`
+1. Добавляем класс `App\Controller\Api\v3\UserController`
     ```php
     <?php
     
@@ -321,28 +322,28 @@
         }
     }
     ```
-10. Выполняем запрос Add user v3 из Postman-коллекции v3, видим, что пользователь добавлен в БД и пароль захеширован
+1. Выполняем запрос Add user v3 из Postman-коллекции v3, видим, что пользователь добавлен в БД и пароль захеширован
 
 ## Добавляем форму логина 
 
-12. В файле `config/packages/security.yaml` в секции `firewall.main` добавляем `security:false`
-13. Генерируем форму логина `php bin/console make:auth`
+1. В файле `config/packages/security.yaml` в секции `firewall.main` добавляем `security:false`
+1. Генерируем форму логина `php bin/console make:auth`
      1. Выбираем `Login form authenticator`
      1. Указываем имя класса для аутентификатора `AppLoginAuthenticator` и контроллера `LoginController`
      1. Не создаём `/logout URL`
-14. В файле `src/templates/security/login.html.twig` зависимость от базового шаблона
-15. Переходим по адресу `http://localhost:7777/login` и вводим логин/пароль пользователя, которого создали при проверке
+1. В файле `src/templates/security/login.html.twig` зависимость от базового шаблона
+1. Переходим по адресу `http://localhost:7777/login` и вводим логин/пароль пользователя, которого создали при проверке
     API. Видим, что после нажатия на `Sign in` ничего не происходит.
 
 ## Включаем security 
 
-17. Убираем в файле `config/packages/security.yaml` в секции `firewall.main` строку `security:false`
-18. Ещё раз переходим по адресу `http://localhost:7777/login` и вводим логин/пароль пользователя, после нажатия на
+1. Убираем в файле `config/packages/security.yaml` в секции `firewall.main` строку `security:false`
+1. Ещё раз переходим по адресу `http://localhost:7777/login` и вводим логин/пароль пользователя, после нажатия на
     `Sign in` получаем ошибку
 
 ## Исправляем ошибку
  
-22. В классе `App\Security\AppLoginAuthenticator` исправляем метод `onAuthenticationSuccess`
+1. В классе `App\Security\AppLoginAuthenticator` исправляем метод `onAuthenticationSuccess`
     ```php
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
@@ -353,40 +354,40 @@
         return new RedirectResponse($this->urlGenerator->generate('app_api_v3_user_getusers'));
     }
     ```
-23. Проверяем, что всё заработало
+1. Проверяем, что всё заработало
 
 ## Добавляем авторизацию для ROLE_ADMIN
 
-25. В файле `config/packages/security.yaml` в секцию `access_control` добавляем условие
+1. В файле `config/packages/security.yaml` в секцию `access_control` добавляем условие
      ```yaml
      - { path: ^/api/v3/user, roles: ROLE_ADMIN, methods: [DELETE] }
      ```
-26. Выполняем запрос Delete user v3 из Postman-коллекции v3, добавив Cookie `PHPSESSID`, которую можно посмотреть в браузере
+1. Выполняем запрос Delete user v3 из Postman-коллекции v3, добавив Cookie `PHPSESSID`, которую можно посмотреть в браузере
     после успешного логина. Проверяем, что возвращается ответ 403 с сообщением `Access denied`
-27. Добавляем роль `ROLE_ADMIN` пользователю в БД, перелогинимся, чтобы получить корректную сессию и проверяем, что
+1. Добавляем роль `ROLE_ADMIN` пользователю в БД, перелогинимся, чтобы получить корректную сессию и проверяем, что
     стал возвращаться ответ 200
 
 ## Добавляем авторизацию для ROLE_VIEW
  
-31. В файле `config/packages/security.yaml` в секции `access_control` добавляем условие
+1. В файле `config/packages/security.yaml` в секции `access_control` добавляем условие
      ```yaml
      - { path: ^/api/v3/user, roles: ROLE_VIEW, methods: [GET] }
      ```
-32. Выполняем запрос Get user list v3 из Postman-коллекции v3. Проверяем, что возвращается ответ 403 с сообщением
+1. Выполняем запрос Get user list v3 из Postman-коллекции v3. Проверяем, что возвращается ответ 403 с сообщением
     `Access denied`
  
 ## Добавляем иерархию ролей 
 
-36. Добавляем в файл `config/packages/security.yaml` секцию `role_hierarchy`
+1. Добавляем в файл `config/packages/security.yaml` секцию `role_hierarchy`
      ```yaml
      role_hierarchy:
          ROLE_ADMIN: ROLE_VIEW
      ```
-37. Ещё раз выполняем запрос Get user list v3 из Postman-коллекции v3. Проверяем, что возвращается ответ 200
+1. Ещё раз выполняем запрос Get user list v3 из Postman-коллекции v3. Проверяем, что возвращается ответ 200
  
 ## Добавляем Voter 
 
-41. В класс `App\Manager\UserManager` добавляем метод `findUserById`
+1. В класс `App\Manager\UserManager` добавляем метод `findUserById`
      ```php
      public function findUserById(int $userId): ?User
      {
@@ -396,7 +397,7 @@
          return $userRepository->find($userId);
      }
      ```
-42. Добавляем класс `App\Security\Voter\UserVoter`
+1. Добавляем класс `App\Security\Voter\UserVoter`
      ```php
      <?php
     
@@ -427,9 +428,18 @@
          }
      }
      ```
-43. В классе `App\Controller\Api\v3\UserController`
+1. В классе `App\Controller\Api\v3\UserController`
      1. добавляем инъекцию `AuthorizationCheckerInterface`
-     2. Исправляем метод `deleteUserAction`
+         ```php
+         private AuthorizationCheckerInterface $authorizationChecker;
+    
+         public function __construct(UserManager $userManager, AuthorizationCheckerInterface $authorizationChecker)
+         {
+             $this->userManager = $userManager;
+             $this->authorizationChecker = $authorizationChecker;
+         }
+         ``` 
+     1. Исправляем метод `deleteUserAction`
          ```php
          /**
           * @Route("", methods={"DELETE"})
@@ -446,17 +456,17 @@
              return new JsonResponse(['success' => $result], $result ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
          }
          ```
-44. Выполняем запрос Delete user v3 из Postman-коллекции v3 сначала с идентификатором другого пользователя (не того,
+1. Выполняем запрос Delete user v3 из Postman-коллекции v3 сначала с идентификатором другого пользователя (не того,
     который залогинен), потом со своим идентификатором. Проверяем, что в первом случае ответ 200, во втором - 403
  
 ## Изменяем стратегию для Voter'ов 
 
-48. В файл `config/packages/security.yaml` добавляем секцию `access_decision_manager`
+1. В файл `config/packages/security.yaml` добавляем секцию `access_decision_manager`
      ```yaml
      access_decision_manager:
          strategy: consensus
      ```
-49. Добавляем класс `App\Security\Voter\FakeUserVoter`
+1. Добавляем класс `App\Security\Voter\FakeUserVoter`
      ```php
      <?php
     
@@ -469,7 +479,7 @@
      {
          protected function supports(string $attribute, $subject): bool
          {
-             return true;
+             return $subject instanceof User;
          }
     
          protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -478,7 +488,7 @@
          }
      }
      ```
-50. Добавляем класс `App\Security\Voter\DummyUserVoter`
+1. Добавляем класс `App\Security\Voter\DummyUserVoter`
      ```php
      <?php
     
@@ -491,7 +501,7 @@
      {
          protected function supports(string $attribute, $subject): bool
          {
-             return true;
+             return $subject instanceof User;
          }
     
          protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -500,4 +510,4 @@
          }
      }
      ```
-51. Проверяем, что можно удалить другого (не того, кто выполняет запрос) пользователя тоже больше нельзя
+1. Проверяем, что можно удалить другого (не того, кто выполняет запрос) пользователя тоже больше нельзя

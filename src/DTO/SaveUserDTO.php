@@ -25,6 +25,9 @@ class SaveUserDTO
 
     public bool $isActive;
 
+    /**
+     * @Assert\Type("array<SaveUserDTO>")
+     */
     public array $followers;
 
     /** @var string[] */

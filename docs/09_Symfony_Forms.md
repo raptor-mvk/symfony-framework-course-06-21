@@ -468,6 +468,9 @@
     
         public bool $isActive;
     
+        /**
+         * @Assert\Type("array<SaveUserDTO>")
+         */
         public array $followers;
     
         public function __construct(array $data)
