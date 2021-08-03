@@ -1,6 +1,7 @@
 <?php
 
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SaveUserDTO
@@ -26,12 +27,16 @@ class SaveUserDTO
 
     public array $followers;
 
+    /** @var string[] */
+    public array $roles;
+
     public function __construct(array $data)
     {
         $this->login = $data['login'] ?? '';
         $this->password = $data['password'] ?? '';
         $this->age = $data['age'] ?? 0;
         $this->isActive = $data['isActive'] ?? false;
+        $this->roles = $data['roles'] ?? [];
         $this->followers = $data['followers'] ?? [];
     }
 
@@ -42,6 +47,7 @@ class SaveUserDTO
             'password' => $user->getPassword(),
             'age' => $user->getAge(),
             'isActive' => $user->isActive(),
+            'roles' => $user->getRoles(),
             'followers' => array_map(
                 static function (User $user) {
                     return [
@@ -55,5 +61,18 @@ class SaveUserDTO
                 $user->getFollowers()
             ),
         ]);
+    }
+
+    public static function fromRequest(Request $request): self
+    {
+        $roles = $request->request->get('roles') ?? $request->query->get('roles');
+
+        return new self(
+            [
+                'login' => $request->request->get('login') ?? $request->query->get('login'),
+                'password' => $request->request->get('password') ?? $request->query->get('password'),
+                'roles' => json_decode($roles, true, 512, JSON_THROW_ON_ERROR),
+            ]
+        );
     }
 }

@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManager
 {
@@ -23,10 +25,13 @@ class UserManager
 
     private FormFactoryInterface $formFactory;
 
-    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
+    private UserPasswordHasherInterface $userPasswordHasher;
+
+    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
     public function getSaveForm(): FormInterface
@@ -43,9 +48,10 @@ class UserManager
     public function saveUserFromDTO(User $user, SaveUserDTO $saveUserDTO): ?int
     {
         $user->setLogin($saveUserDTO->login);
-        $user->setPassword($saveUserDTO->password);
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $saveUserDTO->password));
         $user->setAge($saveUserDTO->age);
         $user->setIsActive($saveUserDTO->isActive);
+        $user->setRoles($saveUserDTO->roles);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
@@ -88,7 +94,6 @@ class UserManager
         }
 
         $user->resetFollowers();
-        var_dump($userDTO);
 
         foreach ($userDTO->followers as $followerData) {
             $followerUserDTO = new SaveUserDTO($followerData);
@@ -104,7 +109,6 @@ class UserManager
             }
             $user->addFollower($followerUser);
         }
-        var_dump(array_map(function(User $user) { return $user->getId(); }, $user->getFollowers()));
 
         return $this->saveUserFromDTO($user, $userDTO);
     }
