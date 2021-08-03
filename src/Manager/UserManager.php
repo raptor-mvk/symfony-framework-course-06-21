@@ -169,4 +169,12 @@ class UserManager
 
         return $userRepository->getUsers($page, $perPage);
     }
+
+    public function findUserById(int $userId): ?User
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        return $userRepository->find($userId);
+    }
 }
