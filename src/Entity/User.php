@@ -27,6 +27,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
 
     /**
      * @ORM\Column(type="string", length=32, nullable=false, unique=true)
+     * @JMS\Groups({"user1"})
      */
     private string $login;
 
@@ -80,12 +81,14 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @JMS\Type("string")
+     * @JMS\Groups({"user1"})
      */
     private int $age;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
      * @JMS\Type("int")
+     * @JMS\Groups({"user1"})
      */
     private bool $isActive;
 
