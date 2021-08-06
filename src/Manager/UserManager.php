@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\LinkedUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use SaveUserDTO;
+use App\DTO\SaveUserDTO;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;

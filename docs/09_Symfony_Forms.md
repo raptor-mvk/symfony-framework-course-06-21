@@ -124,6 +124,8 @@
 1. Добавляем класс `App\DTO\SaveUserDTO`
     ```php
     <?php
+   
+    namespace App\DTO;
     
     use App\Entity\User;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -443,6 +445,8 @@
 1. Исправляем класс `App\DTO\SaveUserDTO`
     ```php
     <?php
+   
+    namespace App\DTO;
     
     use App\Entity\User;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -470,6 +474,7 @@
     
         /**
          * @Assert\Type("array<SaveUserDTO>")
+         * @Assert\Valid
          */
         public array $followers;
     

@@ -135,6 +135,8 @@
 1. Исправляем класс `App\DTO\SaveUserDTO`
     ```php
     <?php
+   
+    namespace App\DTO;
     
     use App\Entity\User;
     use Symfony\Component\HttpFoundation\Request;

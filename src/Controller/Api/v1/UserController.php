@@ -7,7 +7,7 @@ use App\Event\CreateUserEvent;
 use App\Exception\DeprecatedApiException;
 use App\Manager\UserManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use SaveUserDTO;
+use App\DTO\SaveUserDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
