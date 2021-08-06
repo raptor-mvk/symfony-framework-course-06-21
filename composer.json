@@ -21,6 +21,7 @@
         "symfony/form": "5.3.*",
         "symfony/framework-bundle": "5.3.*",
         "symfony/maker-bundle": "^1.33",
+        "symfony/options-resolver": "5.3.*",
         "symfony/runtime": "5.3.*",
         "symfony/security-bundle": "5.3.*",
         "symfony/twig-bundle": "5.3.*",
