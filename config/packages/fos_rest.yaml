@@ -1,10 +1,10 @@
 # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
 fos_rest:
-#    param_fetcher_listener:  true
+    param_fetcher_listener: force
 #    allowed_methods_listener:  true
 #    routing_loader: true
     view:
-        view_response_listener:  true
+        view_response_listener: true
 #    exception:
 #        codes:
 #            App\Exception\MyException: 403
