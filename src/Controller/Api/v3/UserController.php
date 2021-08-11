@@ -3,19 +3,15 @@
 namespace App\Controller\Api\v3;
 
 use App\Entity\User;
-use App\Event\CreateUserEvent;
-use App\Exception\DeprecatedApiException;
 use App\Manager\UserManager;
 use App\Security\Voter\UserVoter;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use SaveUserDTO;
+use App\DTO\SaveUserDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Twig\Environment;
 
 /**
  * @Route("/api/v3/user")

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\DTO;
+
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +29,7 @@ class SaveUserDTO
 
     /**
      * @Assert\Type("array<SaveUserDTO>")
+     * @Assert\Valid
      */
     public array $followers;
 
