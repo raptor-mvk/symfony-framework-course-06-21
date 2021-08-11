@@ -242,7 +242,7 @@
     token_ttl: '%env(JWT_TTL_SEC)%'
     ```
 1. В классе `App\Service\AuthService`
-1. Добавляем зависимость от `JWTEncoderInterface` и целочисленный параметр `tokenTTL`
+    1. Добавляем зависимость от `JWTEncoderInterface` и целочисленный параметр `tokenTTL`
         ```php
         private JWTEncoderInterface $jwtEncoder;
     
@@ -256,7 +256,7 @@
             $this->tokenTTL = $tokenTTL;
         }
         ```         
-1. Исправляем метод `getToken`
+    1. Исправляем метод `getToken`
         ```php
         public function getToken(string $login): string
         {
