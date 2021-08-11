@@ -19,6 +19,7 @@ security:
             security: false
         main:
             stateless: true
+            security: false
             custom_authenticator: App\Security\JWTTokenAuthenticator
 
             # activate different ways to authenticate
