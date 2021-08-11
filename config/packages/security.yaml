@@ -19,7 +19,7 @@ security:
             security: false
         main:
             stateless: true
-            custom_authenticator: App\Security\ApiTokenAuthenticator
+            custom_authenticator: App\Security\JWTTokenAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
