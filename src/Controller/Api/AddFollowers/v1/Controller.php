@@ -9,6 +9,7 @@ use App\Service\SubscriptionService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
+use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends AbstractFOSRestController
@@ -33,6 +34,8 @@ class Controller extends AbstractFOSRestController
      * @RequestParam(name="followersLogin")
      * @RequestParam(name="count", requirements="\d+")
      * @RequestParam(name="async", requirements="0|1")
+     *
+     * @throws JsonException
      */
     public function addFollowersAction(int $userId, string $followersLogin, int $count, int $async): Response
     {
@@ -42,8 +45,8 @@ class Controller extends AbstractFOSRestController
                 $createdFollowers = $this->subscriptionService->addFollowers($user, $followersLogin, $count);
                 $view = $this->view(['created' => $createdFollowers], 200);
             } else {
-                $message = (new AddFollowersDTO($userId, $followersLogin, $count))->toAMQPMessage();
-                $result = $this->asyncService->publishToExchange(AsyncService::ADD_FOLLOWER, $message);
+                $message = $this->subscriptionService->getFollowersMessages($user, $followersLogin, $count);
+                $result = $this->asyncService->publishMultipleToExchange(AsyncService::ADD_FOLLOWER, $message);
                 $view = $this->view(['success' => $result], $result ? 200 : 500);
             }
         } else {
