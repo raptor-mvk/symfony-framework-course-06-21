@@ -527,7 +527,7 @@
          */
         public function saveTweetAction(int $authorId, string $text, ?int $async): Response
         {
-            $tweet = $this->tweetService->saveTweet($authorId, $text);
+            $tweet = $this->tweetManager->saveTweet($authorId, $text);
             $success = $tweet !== null;
             if ($success) {
                 if ($async === 1) {
