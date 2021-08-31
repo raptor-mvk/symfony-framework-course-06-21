@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\GetUsersByQuery\v1;
+namespace App\Controller\Api\GetUsersWithAggregation\v1;
 
 use App\Manager\UserManager;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -18,14 +18,12 @@ class Controller extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/api/v1/get-users-by-query")
+     * @Rest\Get("/api/v1/get-users-with-aggregation")
      *
-     * @QueryParam(name="query")
-     * @QueryParam(name="perPage", requirements="\d+")
-     * @QueryParam(name="page", requirements="\d+")
+     * @QueryParam(name="field")
      */
-    public function getUsersByQueryAction(string $query, int $perPage, int $page): Response
+    public function getUsersWithAggregationAction(string $field): Response
     {
-        return $this->handleView($this->view($this->userManager->findUserByQuery($query, $perPage, $page), 200));
+        return $this->handleView($this->view($this->userManager->findUserWithAggregation($field), 200));
     }
 }
