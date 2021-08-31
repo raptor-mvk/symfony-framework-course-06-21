@@ -105,22 +105,22 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     /**
      * @ORM\Column(type="string", length=32, nullable=true, unique=true)
      */
-    private string $token;
+    private ?string $token;
 
     /**
      * @ORM\Column(type="string", length=11, nullable=true)
      */
-    private string $phone;
+    private ?string $phone;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
      */
-    private string $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private string $preferred;
+    private ?string $preferred;
 
     public function __construct()
     {
@@ -335,7 +335,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->token = $token;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -345,7 +345,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->phone = $phone;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -355,7 +355,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->email = $email;
     }
 
-    public function getPreferred(): string
+    public function getPreferred(): ?string
     {
         return $this->preferred;
     }
