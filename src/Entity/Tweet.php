@@ -44,7 +44,6 @@ class Tweet
 
     /**
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="create")
      */
     private DateTime $createdAt;
 
@@ -88,8 +87,11 @@ class Tweet
         return $this->createdAt;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
     public function setCreatedAt(): void {
-        $this->createdAt = new DateTime();
+        $this->createdAt = DateTime::createFromFormat('U', (string)time());
     }
 
     public function getUpdatedAt(): DateTime {
