@@ -6,8 +6,6 @@ use App\Entity\User;
 use App\Manager\SubscriptionManager;
 use App\Manager\UserManager;
 use App\Service\SubscriptionService;
-use App\Service\UserService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -16,10 +14,11 @@ use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SubscriptionServiceTest extends TestCase
 {
+    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /** @var EntityManagerInterface|MockInterface */
     private static $entityManager;
     private const CORRECT_AUTHOR = 1;
@@ -77,7 +76,7 @@ class SubscriptionServiceTest extends TestCase
     {
         /** @var MockInterface|EntityRepository $repository */
         $repository = Mockery::mock(EntityRepository::class);
-        $repository->shouldReceive('find')->with(self::INCORRECT_AUTHOR)->andReturn(null)->never();
+        $repository->shouldReceive('find')->with(self::INCORRECT_AUTHOR)->andReturn(null)->once();
         $repository->shouldReceive('find')->with(self::INCORRECT_FOLLOWER)->never();
         /** @var MockInterface|EntityManagerInterface $repository */
         self::$entityManager = Mockery::mock(EntityManagerInterface::class);
