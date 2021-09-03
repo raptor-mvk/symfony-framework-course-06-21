@@ -31,7 +31,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
 
     /**
      * @ORM\Column(type="string", length=32, nullable=false, unique=true)
-     * @JMS\Groups({"user1"})
+     * @JMS\Groups({"user1","elastica"})
      */
     private string $login;
 
@@ -85,7 +85,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @JMS\Type("int")
-     * @JMS\Groups({"user1"})
+     * @JMS\Groups({"user1","elastica"})
      */
     private int $age;
 
@@ -105,22 +105,28 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     /**
      * @ORM\Column(type="string", length=32, nullable=true, unique=true)
      */
-    private string $token;
+    private ?string $token;
 
     /**
      * @ORM\Column(type="string", length=11, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Groups({"elastica"})
      */
-    private string $phone;
+    private ?string $phone = null;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Groups({"elastica"})
      */
-    private string $email;
+    private ?string $email = null;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Groups({"elastica"})
      */
-    private string $preferred;
+    private ?string $preferred = null;
 
     public function __construct()
     {
@@ -335,7 +341,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->token = $token;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -345,7 +351,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->phone = $phone;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -355,7 +361,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         $this->email = $email;
     }
 
-    public function getPreferred(): string
+    public function getPreferred(): ?string
     {
         return $this->preferred;
     }
