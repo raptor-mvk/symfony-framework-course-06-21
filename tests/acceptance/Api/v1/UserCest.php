@@ -3,6 +3,7 @@
 namespace AcceptanceTests\Api\v1;
 
 use App\Tests\AcceptanceTester;
+use Codeception\Util\HttpCode;
 
 class UserCest
 {
@@ -15,6 +16,7 @@ class UserCest
             'age' => 23,
             'isActive' => 'true',
         ]);
+        $I->canSeeResponseCodeIs(HttpCode::OK);
         $I->canSeeResponseMatchesJsonType(['id' => 'integer:>0']);
     }
 }
