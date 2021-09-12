@@ -5,7 +5,6 @@ namespace IntegrationTests\Command;
 use App\Entity\User;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
-use UnitTests\Fixtures\MultipleUsersFixture;
 
 class AddFollowersCommandCest
 {
