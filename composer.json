@@ -28,6 +28,7 @@
         "symfony/form": "5.3.*",
         "symfony/framework-bundle": "5.3.*",
         "symfony/http-client": "5.3.*",
+        "symfony/lock": "5.3.*",
         "symfony/maker-bundle": "^1.33",
         "symfony/monolog-bundle": "^3.7",
         "symfony/options-resolver": "5.3.*",
