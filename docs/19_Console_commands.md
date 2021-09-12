@@ -363,7 +363,7 @@
         public function executeDataProvider(): array
         {
             return [
-                'positive' => [100, 'login', "100 followers were created\n"],
+                'positive' => [20, 'login', "20 followers were created\n"],
                 'zero' => [0, 'other_login', "0 followers were created\n"],
                 'default' => [null, 'login3', "100 followers were created\n"],
                 'negative' => [-1, 'login_too', "Count should be positive integer\n"],
