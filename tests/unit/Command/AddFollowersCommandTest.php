@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use UnitTests\FixturedTestCase;
 use UnitTests\Fixtures\MultipleUsersFixture;
 
@@ -55,12 +54,11 @@ class AddFollowersCommandTest extends FixturedTestCase
         $userManager = new UserManager($this->getDoctrineManager(), $formFactory, $encoder, $finder);
         $author = $userManager->findUserByLogin(MultipleUsersFixture::PRATCHETT);
         $params = ['authorId' => $author->getId()];
-        $options = ['login' => $login];
-        if ($followersCount !== null) {
-            $params['count'] = $followersCount;
-        }
-        $commandTester->execute($params, $options);
+        $inputs = $followersCount === null ? ["\n"] : ["$followersCount\n"];
+        $commandTester->setInputs($inputs);
+        $commandTester->execute($params);
         $output = $commandTester->getDisplay();
+
         static::assertSame($expected, $output);
     }
 }
