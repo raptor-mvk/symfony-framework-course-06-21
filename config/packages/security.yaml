@@ -1,41 +1,30 @@
 security:
-    # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: login
-    encoders:
-        App\Entity\User:
-            algorithm: auto
+        users_in_memory:
+            memory:
+                users:
+                    admin:
+                        password: 'my_pass'
+                        roles: 'ROLE_ADMIN'
+                    user:
+                        password: 'other_pass'
+                        roles: 'ROLE_USER'
+
+    password_hashers:
+        App\Entity\User: auto
+        Symfony\Component\Security\Core\User\User: plaintext
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        token:
-            pattern: ^/api/v1/token
-            security: false
         main:
-            stateless: true
-            security: false
-            custom_authenticator: App\Security\JWTTokenAuthenticator
+            http_basic:
+                realm: Secured Area
+            lazy: true
+            provider: users_in_memory
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/v3/user, roles: ROLE_ADMIN, methods: [DELETE] }
-        - { path: ^/api/v3/user, roles: ROLE_VIEW, methods: [GET] }
+        - { path: ^/api/v4/save-user, roles: ROLE_ADMIN }
 
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_VIEW
-
-    access_decision_manager:
-        strategy: consensus
