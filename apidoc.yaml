@@ -1,0 +1,578 @@
+openapi: 3.0.0
+info:
+  title: 'My App'
+  description: 'This is an awesome app!'
+  version: 1.0.0
+paths:
+  '/api/v2/user/by-login/{user_login}':
+    get:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    put:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    delete:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    options:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    head:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    trace:
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/add-followers:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - userId
+                - followersLogin
+                - count
+                - async
+              type: object
+              properties:
+                userId:
+                  pattern: \d+
+                  type: string
+                  default: null
+                followersLogin:
+                  type: string
+                  default: null
+                count:
+                  pattern: \d+
+                  type: string
+                  default: null
+                async:
+                  pattern: 0|1
+                  type: string
+                  default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/get-feed:
+    get:
+      tags:
+        - Лента
+      parameters:
+        -
+          name: userId
+          in: query
+          description: 'ID пользователя'
+          required: false
+          allowEmptyValue: false
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+          example: '135'
+        -
+          name: count
+          in: query
+          description: 'Количество твитов в ленте'
+          required: false
+          allowEmptyValue: true
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+          example: '5'
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/tweet:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - authorId
+                - text
+              type: object
+              properties:
+                authorId:
+                  pattern: \d+
+                  type: string
+                  default: null
+                text:
+                  type: string
+                  default: null
+                async:
+                  pattern: 0|1
+                  type: string
+                  default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v4/get-users:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/get-users-by-query:
+    get:
+      parameters:
+        -
+          name: query
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+        -
+          name: perPage
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+        -
+          name: page
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/get-users-by-query-with-aggregation:
+    get:
+      parameters:
+        -
+          name: query
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+        -
+          name: field
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/get-users-with-aggregation:
+    get:
+      parameters:
+        -
+          name: field
+          in: query
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v4/save-user:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - login
+                - password
+                - roles
+                - age
+                - isActive
+              type: object
+              properties:
+                login:
+                  type: string
+                  default: null
+                password:
+                  type: string
+                  default: null
+                roles:
+                  type: string
+                  default: null
+                age:
+                  pattern: \d+
+                  type: string
+                  default: null
+                isActive:
+                  pattern: true|false
+                  type: string
+                  default: null
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v5/save-user:
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/token:
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/upload:
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/user:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    delete:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  '/api/v1/user/{id}':
+    delete:
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            pattern: \d+
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/user/async:
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v1/user/form:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  '/api/v1/user/form/{id}':
+    get:
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            pattern: \d+
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            pattern: \d+
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v2/user:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    put:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    delete:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    options:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    head:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    trace:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  '/api/v2/user/{user_id}':
+    get:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    put:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    delete:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    options:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    head:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+    trace:
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
+  /api/v3/user:
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    delete:
+      responses:
+        default:
+          description: ''
+      operationId: null
+    patch:
+      responses:
+        default:
+          description: ''
+      operationId: null
+  '/api/doc/{area}':
+    get:
+      parameters:
+        -
+          name: area
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+      operationId: null
