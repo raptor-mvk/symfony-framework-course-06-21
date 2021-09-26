@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My App",
+        "description": "This is an awesome app!",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "\/api\/v1\/get-feed": {
+            "get": {
+                "tags": [
+                    "\u041b\u0435\u043d\u0442\u0430"
+                ],
+                "operationId": "getFeed",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "ID \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f",
+                        "required": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "\\d+"
+                        },
+                        "example": "135"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0442\u0432\u0438\u0442\u043e\u0432 \u0432 \u043b\u0435\u043d\u0442\u0435",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "\\d+"
+                        },
+                        "example": "5"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    }
+}

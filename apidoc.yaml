@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: 'My App'
+  description: 'This is an awesome app!'
+  version: 1.0.0
+paths:
+  /api/v1/get-feed:
+    get:
+      tags:
+        - Лента
+      operationId: getFeed
+      parameters:
+        -
+          name: userId
+          in: query
+          description: 'ID пользователя'
+          required: false
+          allowEmptyValue: false
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+          example: '135'
+        -
+          name: count
+          in: query
+          description: 'Количество твитов в ленте'
+          required: false
+          allowEmptyValue: true
+          schema:
+            pattern: \d+
+            type: string
+            default: null
+          example: '5'
+      responses:
+        default:
+          description: ''

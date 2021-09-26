@@ -73,7 +73,7 @@
                 ->add('login', TextType::class)
                 ->add('password', PasswordType::class)
                 ->add('age', IntegerType::class)
-                ->add('isActual', CheckboxType::class, ['required' => false])
+                ->add('isActive', CheckboxType::class, ['required' => false])
                 ->add('submit', SubmitType::class)
                 ->getForm();
         }
@@ -840,4 +840,3 @@
    пользователя-автора из предыдущего раздела
 1. Нажимаем новую кнопку Delete this follower, нажимаем на Submit и видим в БД, что подписка на автора у удалённого
    пользователя удалилась
-   

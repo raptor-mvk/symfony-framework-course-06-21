@@ -147,7 +147,7 @@
 1. В файле `config/packages/security.yaml` меняем содержимое секции `firewalls.main`
     ```yaml
     stateless: true
-        custom_authenticator: App\Security\ApiTokenAuthenticator
+    custom_authenticator: App\Security\ApiTokenAuthenticator
     ```
 1. В классе `App\Manager\UserManager` добавляем метод `findUserByToken`
     ```php
