@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api\GetTweets\v1;
 
-use App\Entity\Tweet;
 use App\Manager\TweetManager;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;

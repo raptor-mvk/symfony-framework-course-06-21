@@ -48,7 +48,7 @@ class UserManager
             ->add('login', TextType::class)
             ->add('password', PasswordType::class)
             ->add('age', IntegerType::class)
-            ->add('isActual', CheckboxType::class, ['required' => false])
+            ->add('isActive', CheckboxType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->getForm();
     }
