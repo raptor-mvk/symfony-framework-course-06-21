@@ -29,17 +29,15 @@ class Controller extends AbstractFOSRestController
      * @OA\Post(
      *     operationId="addUser",
      *     tags={"Пользователи"},
-     *     @OA\Parameter(
-     *         name="body",
-     *         in="path",
-     *         required=true,
+     *     @OA\RequestBody(
+     *         description="Input data format",
      *         @OA\JsonContent(ref=@Model(type=SaveUserDTO::class))
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(ref=@Model(type=UserIsSavedDTO::class))
      *     )
-     * )
-     * @OA\Response(
-     *     response=200,
-     *     description="Success",
-     *     @OA\JsonContent(ref=@Model(type=UserIsSavedDTO::class))
      * )
      */
     public function saveUserAction(SaveUserDTO $request, ConstraintViolationListInterface $validationErrors): Response
