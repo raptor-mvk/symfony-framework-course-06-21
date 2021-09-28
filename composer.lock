@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f35e079ce54896ca9af8998cf87afc7",
+    "content-hash": "7735765c479c0adc1a130e3744846b06",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4915,6 +4915,41 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "raptor-mvk/statsd-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raptor-mvk/statsd-bundle.git",
+                "reference": "911187c29e2b360e039f9bd167f56b4cf3e3b6a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raptor-mvk/statsd-bundle/zipball/911187c29e2b360e039f9bd167f56b4cf3e3b6a2",
+                "reference": "911187c29e2b360e039f9bd167f56b4cf3e3b6a2",
+                "shasum": ""
+            },
+            "require": {
+                "domnikl/statsd": "^3.0",
+                "php": "^7.2.5"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "StatsdBundle\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides configured StatsdAPIClient",
+            "support": {
+                "source": "https://github.com/raptor-mvk/statsd-bundle/tree/master",
+                "issues": "https://github.com/raptor-mvk/statsd-bundle/issues"
+            },
+            "time": "2020-11-03T11:19:17+00:00"
         },
         {
             "name": "react/promise",
@@ -13980,7 +14015,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/elastica-bundle": 20
+        "friendsofsymfony/elastica-bundle": 20,
+        "raptor-mvk/statsd-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
