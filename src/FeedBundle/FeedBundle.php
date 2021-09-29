@@ -1,10 +1,9 @@
 <?php
 
-namespace StatsdBundle;
+namespace FeedBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class StatsdBundle extends Bundle
+class FeedBundle extends Bundle
 {
-
 }
