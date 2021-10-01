@@ -450,10 +450,11 @@
     namespace App\Controller\Api\GetFeed\v1;
     
     use App\Service\FeedService;
+    use FOS\RestBundle\Controller\AbstractFOSRestController;
     use FOS\RestBundle\Controller\Annotations as Rest;
     use FOS\RestBundle\View\View;
     
-    class Controller
+    class Controller extends AbstractFOSRestController
     {
         /** @var int */
         private const DEFAULT_FEED_SIZE = 20;
