@@ -42,7 +42,7 @@
             // this up() migration is auto-generated, please modify it to your needs
             $this->addSql('ALTER TABLE `users` ADD COLUMN `userAge` INTEGER');
             $this->addSql('UPDATE `users` SET `userAge` = 18');
-            $this->addSql('ALTER TABLE `users` ALTER COLUMN `userAge` SET NOT NULL');
+            $this->addSql('ALTER TABLE `users` MODIFY `userAge` INTEGER NOT NULL');
         }
    
         public function down(Schema $schema) : void
