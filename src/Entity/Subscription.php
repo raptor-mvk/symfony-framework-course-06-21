@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -15,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     }
  * )
  * @ORM\Entity
+ * @ApiResource
  */
 class Subscription
 {
@@ -26,7 +28,7 @@ class Subscription
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      * })
@@ -34,7 +36,7 @@ class Subscription
     private User $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="follower_id", referencedColumnName="id")
      * })
