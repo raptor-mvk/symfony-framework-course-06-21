@@ -16,12 +16,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Resolver\UserCollectionResolver;
+use App\Resolver\UserResolver;
 
 /**
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
  *     graphql={
+ *         "itemQuery"={
+ *             "item_query"=UserResolver::class
+ *         },
  *         "collectionQuery"={
  *             "collection_query"=UserCollectionResolver::class
  *         }
