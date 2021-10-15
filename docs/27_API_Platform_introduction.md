@@ -1,4 +1,6 @@
-﻿1. Забираем последний релиз API Platform из https://github.com/api-platform/api-platform/releases
+﻿# API Platform: введение
+
+1. Забираем последний релиз API Platform из https://github.com/api-platform/api-platform/releases
 1. Распаковываем архив
 1. Меняем пароль на БД:
     1. В файле `docker-compose.yml` меняем пароль на БД в секции `services.db.environment`

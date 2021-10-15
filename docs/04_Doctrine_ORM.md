@@ -676,7 +676,7 @@
         private int $id;
     
         /**
-         * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
+         * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
          * @ORM\JoinColumns({
          *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
          * })
@@ -684,7 +684,7 @@
         private User $author;
     
         /**
-         * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
+         * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
          * @ORM\JoinColumns({
          *   @ORM\JoinColumn(name="follower_id", referencedColumnName="id")
          * })

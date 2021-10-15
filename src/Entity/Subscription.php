@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Table(
@@ -15,6 +18,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     }
  * )
  * @ORM\Entity
+ * @ApiResource
+ * @ApiFilter(SearchFilter::class, properties={"follower.login":"partial"})
+ *
  */
 class Subscription
 {
@@ -26,7 +32,7 @@ class Subscription
     private int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      * })
@@ -34,7 +40,7 @@ class Subscription
     private User $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionFollowers")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptionAuthors")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="follower_id", referencedColumnName="id")
      * })
