@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Table(
@@ -17,6 +19,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * )
  * @ORM\Entity
  * @ApiResource
+ * @ApiFilter(SearchFilter::class, properties={"follower.login":"partial"})
+ *
  */
 class Subscription
 {
