@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,11 +13,13 @@ use JMS\Serializer\Annotation as JMS;
 use JsonException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"login":"partial"})
  */
 class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
