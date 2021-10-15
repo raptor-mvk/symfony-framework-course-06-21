@@ -1,4 +1,6 @@
-﻿1. Для работы потребуется утилита GNU Make https://www.gnu.org/software/make/
+﻿# Микрофреймворки на базе Symfony на примере Symlex
+
+1. Для работы потребуется утилита GNU Make https://www.gnu.org/software/make/
 1. Создаём проект командой `composer create-project symlex/symlex otus_project`
 1. В файле `app/web.php` заменяем
     ```php
