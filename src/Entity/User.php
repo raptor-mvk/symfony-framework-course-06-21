@@ -15,11 +15,18 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use App\Resolver\UserCollectionResolver;
 
 /**
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     graphql={
+ *         "collectionQuery"={
+ *             "collection_query"=UserCollectionResolver::class
+ *         }
+ *     }
+ * )
  * @ApiFilter(SearchFilter::class, properties={"login":"partial"})
  * @ApiFilter(OrderFilter::class, properties={"login"})
  */
@@ -134,6 +141,11 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
      * @JMS\Groups({"elastica"})
      */
     private ?string $preferred = null;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private ?bool $isProtected;
 
     public function __construct()
     {
@@ -384,5 +396,15 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     public function getSubscriptionFollowers(): array
     {
         return $this->subscriptionFollowers->toArray();
+    }
+
+    public function isProtected(): bool
+    {
+        return $this->isProtected ?? false;
+    }
+
+    public function setIsProtected(bool $isProtected): void
+    {
+        $this->isProtected = $isProtected;
     }
 }
