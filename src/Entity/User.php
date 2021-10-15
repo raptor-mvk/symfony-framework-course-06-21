@@ -24,7 +24,12 @@ use App\Resolver\UserResolver;
  * @ApiResource(
  *     graphql={
  *         "itemQuery"={
- *             "item_query"=UserResolver::class
+ *             "item_query"=UserResolver::class,
+ *             "args"={
+ *                 "id"={"type":"Int"},
+ *                 "login"={"type":"String"}
+ *             },
+ *             "read"=false
  *         },
  *         "collectionQuery"={
  *             "collection_query"=UserCollectionResolver::class
