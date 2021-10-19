@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -16,6 +17,7 @@ use JsonException;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TweetRepository")
+ * @ApiResource
  */
 class Tweet
 {
