@@ -17,7 +17,13 @@ use JsonException;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TweetRepository")
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={
+ *         "post"={"status"=202}
+ *     },
+ *     itemOperations={},
+ *     output=false
+ * )
  */
 class Tweet
 {
