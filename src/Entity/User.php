@@ -17,11 +17,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Resolver\UserCollectionResolver;
 use App\Resolver\UserResolver;
+use App\DTO\UserDTO;
 
 /**
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
+ *   output=UserDTO::class,
  *     graphql={
  *         "itemQuery"={
  *             "item_query"=UserResolver::class,
@@ -156,11 +158,17 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
      */
     private ?bool $isProtected;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Subscription", mappedBy="follower")
+     */
+    private Collection $followed;
+
     public function __construct()
     {
         $this->tweets = new ArrayCollection();
         $this->authors = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->followed = new ArrayCollection();
         $this->subscriptionAuthors = new ArrayCollection();
         $this->subscriptionFollowers = new ArrayCollection();
     }
@@ -415,5 +423,13 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     public function setIsProtected(bool $isProtected): void
     {
         $this->isProtected = $isProtected;
+    }
+
+    /**
+     * @return Subscription[]
+     */
+    public function getFollowed(): array
+    {
+        return $this->followed->getValues();
     }
 }
