@@ -24,7 +24,7 @@ class UserTransformer implements DataTransformerInterface
             static function (Subscription $subscription): string {
                 return $subscription->getFollower()->getLogin();
             },
-            $user->getFollowers()
+            $user->getSubscriptionFollowers()
         );
         $userDTO->followed = array_map(
             static function (Subscription $subscription): string {

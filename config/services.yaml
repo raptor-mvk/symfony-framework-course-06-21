@@ -130,3 +130,7 @@ services:
 
     App\Persister\TweetPersister:
         decorates: 'api_platform.doctrine.orm.data_persister'
+
+    App\Controller\Api\v1\JSONSchemaController:
+        arguments:
+            - '@api_platform.json_schema.schema_factory'
